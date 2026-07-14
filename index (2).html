@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Bienvenidos a Nuestro Nuevo Hogar! • Open House</title>
+    <style>
+        :root {
+            --bg-color: #cbdbe5; /* Fondo azul suave */
+            --card-bg: #ffffff;
+            --primary: #0f3057; /* Azul marino profundo */
+            --primary-light: #008891; /* Azul turquesa para detalles */
+            --accent: #e7eaf6; 
+            --text-color: #1b262c;
+            --muted-text: #4b5d67;
+            --border-blue: #00587a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 25px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-image: radial-gradient(#a3bfd1 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .container {
+            max-width: 550px;
+            width: 100%;
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 40px rgba(15, 48, 87, 0.15);
+            text-align: center;
+            box-sizing: border-box;
+            border: 2px solid rgba(15, 48, 87, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--border-blue) 50%, var(--primary-light) 100%);
+        }
+
+        .header-accent {
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary-light);
+            margin: 0 auto 20px auto;
+            border-radius: 2px;
+        }
+
+        h1 { 
+            color: var(--primary); 
+            font-size: 2.2em; 
+            margin: 0 0 10px 0;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: var(--muted-text);
+            margin-bottom: 30px;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        h2 { 
+            color: var(--primary); 
+            font-size: 1.4em;
+            margin-top: 35px; 
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        h2::before, h2::after {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 2px;
+            background-color: var(--primary-light);
+        }
+        
+        .date-box {
+            background-color: #e1e9f3;
+            border: 1px solid rgba(15, 48, 87, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .slogan-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--border-blue) 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 25px 20px;
+            margin: 25px 0;
+            font-size: 1.05em;
+            line-height: 1.5;
+            box-shadow: 0 8px 25px rgba(15, 48, 87, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .slogan-card p {
+            margin: 8px 0;
+        }
+
+        .drink-clause {
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 12px;
+            margin-top: 12px !important;
+            color: #e4f9ff;
+        }
+
+        .gift-card {
+            border: 2px solid rgba(0, 88, 7a, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            background-color: #f7fafc;
+        }
+        .gift-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(15, 48, 87, 0.1);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .gift-title { 
+            font-weight: bold; 
+            font-size: 1.15em; 
+            color: var(--primary);
+        }
+        .gift-meta {
+            font-size: 0.9em;
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+        .slots-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .slot {
+            padding: 12px 8px;
+            background-color: #dce5ec;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.25s ease;
+            border: 1px solid rgba(15, 48, 87, 0.1);
+        }
+        .slot:hover:not(.occupied):not(.selected) {
+            background-color: #cbdbe5;
+            transform: translateY(-1px);
+        }
+        .slot.selected {
+            background-color: var(--primary-light);
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 136, 145, 0.3);
+            border-color: transparent;
+        }
+        .slot.occupied {
+            background-color: #e2e8f0;
+            color: #a0aec0;
+            cursor: not-allowed;
+            text-decoration: line-through;
+            border: 1px solid #cbd5e0;
+        }
+        
+        .btn-location {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 14px 28px;
+            text-decoration: none;
+            border-radius: 30px;
+            margin-top: 15px;
+            font-weight: bold;
+            box-shadow: 0 6px 15px rgba(15, 48, 87, 0.25);
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-location:hover {
+            background-color: var(--border-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Datos de Transferencia */
+        .bank-details {
+            background-color: #f0f4f8;
+            padding: 22px;
+            border-radius: 16px;
+            margin-top: 25px;
+            text-align: left;
+            border: 1px solid rgba(15, 48, 87, 0.15);
+            border-left: 4px solid var(--primary);
+            font-size: 0.95em;
+        }
+        .bank-details strong.title {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        .bank-row {
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+        .bank-row span {
+            color: var(--muted-text);
+            font-size: 0.9em;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .bank-row b {
+            font-size: 1.1em;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+        }
+
+        .full-box-notice {
+            display: none;
+            background-color: #e3fafc;
+            border-left: 4px solid #008891;
+            color: #0f3057;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 0.95em;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .rsvp-form {
+            background: #f7fafc;
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 35px;
+            text-align: left;
+            border: 2px dashed var(--primary-light);
+        }
+        .rsvp-form h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .rsvp-form label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+            color: var(--primary);
+        }
+        .rsvp-form input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e0;
+            box-sizing: border-box;
+            font-size: 1em;
+            background-color: #fff;
+            color: var(--text-color);
+        }
+        .rsvp-form input:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(0, 136, 145, 0.15);
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: var(--primary-light);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 30px;
+            font-size: 1.05em;
+            font-weight: bold;
+            margin-top: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 136, 145, 0.2);
+            transition: all 0.2s ease;
+        }
+        .btn-submit:hover:not(:disabled) {
+            background-color: var(--primary);
+            transform: translateY(-1px);
+        }
+        .optional-note {
+            font-size: 0.85em;
+            color: var(--muted-text);
+            text-align: center;
+            margin-top: 8px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-accent"></div>
+    <h1>¡Open House! 🏠✨</h1>
+    <p class="subtitle">Acompáñanos a estrenar nuestro nuevo hogar</p>
+
+    <!-- FECHA Y HORA -->
+    <div class="date-box">
+        <h3 style="color: var(--primary); margin: 0 0 8px 0; font-size: 1.3em; font-weight: 700;">📅 Sábado, 18 de Julio de 2026</h3>
+        <p style="margin: 0; color: var(--border-blue); font-weight: 600; font-size: 1.1em;">⏰ Inicio del festejo: 07:00 PM</p>
+    </div>
+
+    <!-- ESLÓGANES -->
+    <div class="slogan-card">
+        <p style="font-style: italic; font-size: 1.05em;">"Si no sabes qué regalar, regálanos dinero, y si ya sabes... ¡tráelo envuelto!"</p>
+        <p class="drink-clause">🍻 "Yo pongo la cena y tú la bebida"</p>
+    </div>
+
+    <!-- UBICACIÓN -->
+    <h2>📍 Ubicación</h2>
+    <p style="line-height: 1.5; margin-bottom: 10px; color: var(--muted-text);">
+        Haz clic abajo para abrir la ubicación exacta de nuestro hogar:
+    </p>
+    <a href="https://maps.app.goo.gl/22yQLskKazyLArN58?g_st=aw" target="_blank" class="btn-location">Ver en Google Maps</a>
+
+    <!-- MESA DE REGALOS -->
+    <h2>🎁 Regalo Colectivo</h2>
+    <p style="font-size: 0.95em; color: var(--muted-text); padding: 0 10px;">
+        *La aportación a las casillas es completamente opcional. Puedes confirmar tu asistencia con o sin selección.
+    </p>
+
+    <!-- Aviso Dinámico de Casillas Llenas -->
+    <div id="noticeFull" class="full-box-notice">
+        📢 ¡Todas las casillas de regalo han sido reservadas! Muchas gracias. Aún puedes registrar tu asistencia aquí abajo para acompañarnos al evento.
+    </div>
+
+    <!-- Regalo Único: Olla a Presión -->
+    <div class="gift-card">
+        <div class="gift-header">
+            <div class="gift-title">Olla a Presión</div>
+            <div class="gift-meta">Meta: $2,100 MXN</div>
+        </div>
+        <p style="margin: 0 0 12px 0; font-size: 0.9em; color: var(--muted-text);">Dividido en 6 casillas de $350 MXN (Puedes realizar tu transferencia con los datos de abajo)</p>
+        <div class="slots-grid" id="olla-slots"></div>
+    </div>
+
+    <!-- DATOS DE TRANSFERENCIA SELECCIONADOS -->
+    <div class="bank-details">
+        <strong class="title">💳 Datos para Transferencia:</strong>
+        
+        <div class="bank-row">
+            <span>Titular:</span>
+            <b>Cruz Maria Hernandez Diaz</b>
+        </div>
+        <div class="bank-row">
+            <span>Cuenta CLABE (BBVA):</span>
+            <b>012 180 01530622669 8</b>
+        </div>
+    </div>
+
+    <!-- FORMULARIO DE CONFIRMACIÓN -->
+    <div class="rsvp-form">
+        <h3>📩 Confirmar Asistencia</h3>
+        
+        <form id="rsvpForm">
+            <label for="nombre">Nombre completo:</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Ej. Ana García" required>
+
+            <label for="regaloElegido">Casilla(s) seleccionada(s) (Opcional):</label>
+            <input type="text" id="regaloElegido" name="regaloElegido" readonly style="background-color: #eef5f9; font-weight: bold; color: var(--primary);" placeholder="Ninguna - Acompañarnos es el mejor regalo">
+
+            <button type="submit" id="btnConfirmar" class="btn-submit">Confirmar Asistencia</button>
+            <p class="optional-note">Tu asistencia queda registrada al dar clic en enviar</p>
+        </form>
+    </div>
+</div>
+
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzga4H93zNu9B4wcEt7owjmZ2Bj-Q-8dK5D60VvMH25zUCC8oK7Cg9Tc8YzoadKAeoxmA/exec'; 
+    let selectedGifts = [];
+
+    function setupGiftGrid(containerId, giftName, totalSlots, cost) {
+        const container = document.getElementById(containerId);
+        for (let i = 1; i <= totalSlots; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'slot';
+            slot.innerText = `$${cost}`;
+            
+            const itemLabel = `${giftName} (Casilla ${i} - $${cost})`;
+            slot.setAttribute('data-label', itemLabel);
+            
+            slot.onclick = () => {
+                if (slot.classList.contains('occupied')) return;
+
+                if (slot.classList.contains('selected')) {
+                    slot.classList.remove('selected');
+                    selectedGifts = selectedGifts.filter(g => g !== itemLabel);
+                } else {
+                    slot.classList.add('selected');
+                    selectedGifts.push(itemLabel);
+                }
+                updateFormStatus();
+            };
+            container.appendChild(slot);
+        }
+    }
+
+    function updateFormStatus() {
+        const inputRegalos = document.getElementById('regaloElegido');
+        if (selectedGifts.length > 0) {
+            inputRegalos.value = selectedGifts.join(' / ');
+        } else {
+            inputRegalos.value = '';
+        }
+    }
+
+    setupGiftGrid('olla-slots', 'Olla a Presión', 6, 350);
+
+    function loadOccupiedSlots() {
+        fetch(scriptURL)
+            .then(res => res.json())
+            .then(data => {
+                if (data.occupied && Array.isArray(data.occupied)) {
+                    let occupiedCount = 0;
+                    const allSlots = document.querySelectorAll('.slot');
+                    
+                    allSlots.forEach(slot => {
+                        const label = slot.getAttribute('data-label');
+                        const isTaken = data.occupied.some(occ => occ.includes(label) || label.includes(occ));
+                        if (isTaken) {
+                            slot.classList.add('occupied');
+                            slot.innerText = 'Reservado';
+                            occupiedCount++;
+                        }
+                    });
+
+                    if (occupiedCount >= allSlots.length) {
+                        document.getElementById('noticeFull').style.display = 'block';
+                    } else {
+                        document.getElementById('noticeFull').style.display = 'none';
+                    }
+                }
+            })
+            .catch(err => console.error('Error al cargar casillas ocupadas:', err));
+    }
+
+    loadOccupiedSlots();
+
+    const form = document.getElementById('rsvpForm');
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        const btnSubmit = document.getElementById('btnConfirmar');
+        btnSubmit.innerText = 'Enviando...';
+        btnSubmit.disabled = true;
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                alert('¡Gracias por confirmar tu asistencia! Nos vemos muy pronto en nuestro nuevo hogar.');
+                form.reset();
+                selectedGifts = [];
+                document.querySelectorAll('.slot.selected').forEach(el => el.classList.remove('selected'));
+                updateFormStatus();
+                setTimeout(loadOccupiedSlots, 1000);
+                btnSubmit.innerText = 'Confirmar Asistencia';
+                btnSubmit.disabled = false;
+            })
+            .catch(error => {
+                alert('Ocurrió un error al guardar tu respuesta. Intenta de nuevo.');
+                btnSubmit.innerText = 'Confirmar Asistencia';
+                btnSubmit.disabled = false;
+            });
+    });
+</script>
+
+</body>
+</html>
